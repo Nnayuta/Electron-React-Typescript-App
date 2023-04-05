@@ -1,0 +1,76 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/store"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:database.s3db"
+}
+
+model CHANNEL {
+  ID             Int     @id @default(autoincrement())
+  NAME           String
+  CHANNEL_NUMBER String
+  STORE          STORE[]
+}
+
+model FLAG {
+  ID    Int     @id @default(autoincrement())
+  NAME  String
+  STORE STORE[]
+}
+
+model REGION {
+  ID    Int     @id @default(autoincrement())
+  NAME  String
+  STORE STORE[]
+}
+
+model SQLITEADMIN_QUERIES {
+  ID   Int     @id @default(autoincrement())
+  NAME String?
+  SQL  String?
+}
+
+model STORE {
+  STORE_KEY      Int            @id @default(autoincrement())
+  STORE_NAME     String?
+  STORE_ID       String?
+  STORE_ADDRESS  String?
+  STORE_NEIG     String?
+  STORE_CITY     String?
+  STORE_STATE    String?
+  STORE_ZIP      String?
+  STORE_PHONE    String?
+  STORE_REGION   Int
+  STORE_SUPPORT  Int
+  STORE_LEADER   Int
+  STORE_TYPE     Int
+  STORE_CHANNEL  Int
+  STORE_FLAG     Int
+  FLAG           FLAG           @relation(fields: [STORE_FLAG], references: [ID], onDelete: NoAction)
+  CHANNEL        CHANNEL        @relation(fields: [STORE_CHANNEL], references: [ID], onDelete: NoAction)
+  TYPE           TYPE           @relation(fields: [STORE_TYPE], references: [ID], onDelete: NoAction)
+  SUPPORT_LEADER SUPPORT_LEADER @relation(fields: [STORE_LEADER], references: [ID], onDelete: NoAction)
+  SUPPORT        SUPPORT        @relation(fields: [STORE_SUPPORT], references: [ID], onDelete: NoAction)
+  REGION         REGION         @relation(fields: [STORE_REGION], references: [ID], onDelete: NoAction)
+}
+
+model SUPPORT {
+  ID    Int     @id @default(autoincrement())
+  NAME  String
+  STORE STORE[]
+}
+
+model SUPPORT_LEADER {
+  ID    Int     @id @default(autoincrement())
+  NAME  String
+  STORE STORE[]
+}
+
+model TYPE {
+  ID    Int     @id @default(autoincrement())
+  NAME  String
+  STORE STORE[]
+}

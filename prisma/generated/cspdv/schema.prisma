@@ -1,0 +1,37 @@
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/cspdv"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:C:/Users/naayu/Cencosud/Suporte PDV - CSPDV - CSPDV/cspdv.db"
+}
+
+model User {
+  id          String   @id @default(uuid())
+  username    String   @unique
+  password    String
+  name        String?
+  isAdmin     Boolean  @default(false)
+  permLevelID Int      @default(1)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @default(now()) @updatedAt
+  token       String?  @unique
+
+  PermLevel PermLevel @relation(fields: [permLevelID], references: [id])
+}
+
+model PermLevel {
+  id    Int     @id @default(autoincrement())
+  level Int     @unique
+  name  String  @unique
+  User  User[]
+  Pages Pages[]
+}
+
+model Pages {
+  id        Int         @id @default(autoincrement())
+  name      String      @unique
+  PermLevel PermLevel[]
+}
