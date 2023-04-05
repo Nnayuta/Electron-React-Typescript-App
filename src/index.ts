@@ -1,5 +1,5 @@
 //Define o caminho do banco de dados
-process.env.DATABASE_URL = `file:C:/Users/${process.env.USERNAME}/Cencosud/Suporte PDV - CSPDV - CSPDV/cspdv.db`;
+process.env.DATABASE_URL = `file:cspdv.db`;
 
 import { app, BrowserWindow, ipcMain } from "electron";
 import { eventHandle } from "./api";
